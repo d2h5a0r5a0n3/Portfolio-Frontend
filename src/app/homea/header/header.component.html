@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+  <a class="navbar-brand fw-bold" routerLink="/">
+    <i class="bi bi-code-slash me-2"></i> Dharaneshwar
+  </a>
+
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ms-auto align-items-center">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/experiences" routerLinkActive="active">Experiences</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/projects" routerLinkActive="active">Projects</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/blogs" routerLinkActive="active">Blogs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact</a>
+      </li>
+      <li class="nav-item">
+        <button
+          class="btn btn-sm btn-outline-light ms-3"
+          (click)="toggleTheme()"
+          title="Toggle Theme"
+        >
+          <i class="bi bi-circle-half"></i>
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>

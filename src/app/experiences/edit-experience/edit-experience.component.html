@@ -1,0 +1,64 @@
+<div class="container py-4">
+  <div class="mb-4">
+    <a routerLink="/experiences" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i> Back to Experiences
+    </a>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title mb-4">Edit Experience</h5>
+
+      <form (ngSubmit)="submitForm()">
+        <div class="mb-3">
+          <label for="title" class="form-label">Job Title</label>
+          <input type="text" [(ngModel)]="experience.role" name="title" id="title" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="company" class="form-label">Company</label>
+          <input type="text" [(ngModel)]="experience.company" name="company" id="company" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input type="text" [(ngModel)]="experience.location" name="location" id="location" class="form-control" required />
+        </div>
+
+        <div class="mb-3 row">
+          <div class="col-md-4">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" [(ngModel)]="startDateInput" name="startDate" id="startDate" class="form-control" required />
+          </div>
+          <div class="col-md-4">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" [(ngModel)]="endDateInput" name="endDate" id="endDate" class="form-control"
+              [disabled]="currentlyWorking" [required]="!currentlyWorking" />
+          </div>
+          <div class="col-md-4 d-flex align-items-end">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="currentlyWorking"
+                name="currentlyWorking" id="currentlyWorking" />
+              <label class="form-check-label ms-1" for="currentlyWorking">
+                Currently Working
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea [(ngModel)]="experience.description" name="description" id="description"
+            class="form-control" rows="3" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-sm">
+          <i class="bi bi-check2-circle me-1"></i> Update
+        </button>
+        <button class="btn btn-secondary btn-sm ms-2" routerLink="/experiences" type="button">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

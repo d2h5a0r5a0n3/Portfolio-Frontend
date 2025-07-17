@@ -1,0 +1,68 @@
+<div class="container py-5">
+    <div class="mb-4">
+        <a routerLink="/projects" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left me-1"></i> Back to Projects
+        </a>
+    </div>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title mb-4 text-center">Add New Project</h4>
+
+            <form (ngSubmit)="submitForm()" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="title" class="form-label">Project Title</label>
+                    <input type="text" id="title" [(ngModel)]="project.title" name="title" class="form-control"
+                        placeholder="e.g. Portfolio Website" required>
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="col-md-4">
+                        <label for="startDate" class="form-label">Start Date</label>
+                        <input type="date" id="startDate" [(ngModel)]="startDateInput" name="startDate"
+                            class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="endDate" class="form-label">End Date</label>
+                        <input type="date" id="endDate" [(ngModel)]="endDateInput" name="endDate" class="form-control"
+                            [disabled]="currentlyWorking" [required]="!currentlyWorking">
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <div class="form-check mt-4">
+                            <input class="form-check-input" type="checkbox" id="currentlyWorking"
+                                name="currentlyWorking" [(ngModel)]="currentlyWorking">
+                            <label class="form-check-label ms-2" for="currentlyWorking">
+                                Currently Working
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="techStack" class="form-label">Tech Stack</label>
+                    <input type="text" id="techStack" [(ngModel)]="project.techStack" name="techStack"
+                        class="form-control" placeholder="e.g. Angular, Spring Boot, MySQL" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea id="description" [(ngModel)]="project.description" name="description" rows="4"
+                        class="form-control" placeholder="Brief project overview" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="github" class="form-label">GitHub URL</label>
+                    <input type="url" id="github" [(ngModel)]="project.github" name="github" class="form-control"
+                        placeholder="https://github.com/your-repo" required>
+                </div>
+                <div class="mb-4">
+                    <label for="demo" class="form-label">Live Demo URL (Optional)</label>
+                    <input type="url" id="demo" [(ngModel)]="project.demo" name="demo" class="form-control"
+                        placeholder="https://yourproject.com">
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-plus-lg me-1"></i> Add Project
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+<div class="container py-5">
+  <div class="mb-4">
+    <a routerLink="/experiences" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i> Back to Experiences
+    </a>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h4 class="card-title mb-4 text-center">Add New Experience</h4>
+
+      <form (ngSubmit)="submitForm()" class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label for="title" class="form-label">Job Title</label>
+          <input type="text" [(ngModel)]="experience.role" name="title" id="title"
+                 class="form-control" required placeholder="e.g. Software Developer">
+        </div>
+
+        <div class="mb-3">
+          <label for="company" class="form-label">Company</label>
+          <input type="text" [(ngModel)]="experience.company" name="company" id="company"
+                 class="form-control" required placeholder="e.g. TechCorp Ltd.">
+        </div>
+
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input type="text" [(ngModel)]="experience.location" name="location" id="location"
+                 class="form-control" required placeholder="e.g. Bengaluru, India">
+        </div>
+
+        <div class="mb-3 row">
+          <div class="col-md-6">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" [(ngModel)]="startDateInput" name="startDate" id="startDate"
+                   class="form-control" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" [(ngModel)]="endDateInput" name="endDate" id="endDate"
+                   class="form-control" [disabled]="currentlyWorking" [required]="!currentlyWorking">
+          </div>
+        </div>
+
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="currentlyWorking"
+                 name="currentlyWorking" id="currentlyWorking">
+          <label class="form-check-label" for="currentlyWorking">
+            Currently Working
+          </label>
+        </div>
+
+        <div class="mb-4">
+          <label for="description" class="form-label">Description</label>
+          <textarea [(ngModel)]="experience.description" name="description" id="description"
+                    rows="4" class="form-control" placeholder="Describe your role and responsibilities..."
+                    required></textarea>
+        </div>
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-success">
+            <i class="bi bi-plus-circle me-1"></i> Add Experience
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
