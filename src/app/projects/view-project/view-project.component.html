@@ -1,0 +1,35 @@
+<div class="view-container container py-5" *ngIf="project">
+  <div class="mb-4">
+        <a routerLink="/projects" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left me-1"></i> Back to Projects
+        </a>
+    </div>
+  <h2 class="project-title mb-3">{{ project.title }}</h2>
+
+  <!-- Project Dates -->
+  <div class="mb-2 text-muted">
+    <i class="bi bi-calendar-event me-1"></i>
+    {{ project.startDate | date: 'MMM yyyy' }} -
+    {{ project.endDate ? (project.endDate | date: 'MMM yyyy') : 'Present' }}
+  </div>
+
+  <div class="mb-4">
+    <span *ngFor="let tech of project.techStack.split(',')" class="badge bg-secondary me-2 text-capitalize">
+      {{ tech.trim() }}
+    </span>
+  </div>
+
+  <div class="project-description p-4 shadow-sm bg-light rounded">
+    <h5 class="mb-3 text-muted">Project Description</h5>
+    <p class="mb-0">{{ project.description }}</p>
+  </div>
+
+  <div class="mt-4 d-flex flex-wrap gap-2">
+    <a [href]="project.github" target="_blank" class="btn btn-dark btn-sm">
+      <i class="bi bi-github me-1"></i> GitHub
+    </a>
+    <a *ngIf="project.demo" [href]="project.demo" target="_blank" class="btn btn-primary btn-sm">
+      <i class="bi bi-box-arrow-up-right me-1"></i> Live Demo
+    </a>
+  </div>
+</div>

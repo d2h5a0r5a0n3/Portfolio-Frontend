@@ -1,0 +1,56 @@
+<div class="container py-4">
+  <h2 class="mb-4">Contact Me</h2>
+
+  <form (ngSubmit)="sendMessage()" #contactForm="ngForm" novalidate>
+    <!-- Name -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" id="name" name="name"
+             [(ngModel)]="form.name" required #nameInput="ngModel">
+      <div *ngIf="nameInput.invalid && nameInput.touched" class="text-danger mt-1">
+        <small *ngIf="nameInput.errors?.['required']">Name is required.</small>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="mail" class="form-label">Email</label>
+      <input type="email" class="form-control" id="mail" name="mail"
+             [(ngModel)]="form.mail" required email #emailInput="ngModel">
+      <div *ngIf="emailInput.invalid && emailInput.touched" class="text-danger mt-1">
+        <small *ngIf="emailInput.errors?.['required']">Email is required.</small>
+        <small *ngIf="emailInput.errors?.['email']">Enter a valid email address.</small>
+      </div>
+    </div>
+
+    <!-- Subject -->
+    <div class="mb-3">
+      <label for="subject" class="form-label">Subject</label>
+      <input type="text" class="form-control" id="subject" name="subject"
+             [(ngModel)]="form.subject" required #subjectInput="ngModel">
+      <div *ngIf="subjectInput.invalid && subjectInput.touched" class="text-danger mt-1">
+        <small *ngIf="subjectInput.errors?.['required']">Subject is required.</small>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <div class="mb-3">
+      <label for="message" class="form-label">Message</label>
+      <textarea rows="5" class="form-control" id="message" name="message"
+                [(ngModel)]="form.message" required #messageInput="ngModel"></textarea>
+      <div *ngIf="messageInput.invalid && messageInput.touched" class="text-danger mt-1">
+        <small *ngIf="messageInput.errors?.['required']">Message is required.</small>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button class="btn btn-primary" type="submit" [disabled]="contactForm.invalid">
+      Send
+    </button>
+  </form>
+
+  <!-- Success Message -->
+  <div *ngIf="success" class="alert alert-success mt-3">
+    Message sent successfully!
+  </div>
+</div>

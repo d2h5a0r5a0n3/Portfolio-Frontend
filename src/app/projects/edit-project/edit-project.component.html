@@ -1,0 +1,71 @@
+<div class="container py-4">
+  <div class="mb-4">
+        <a routerLink="/projects" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left me-1"></i> Back to Projects
+        </a>
+    </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title mb-4">Edit Project</h5>
+
+      <form (ngSubmit)="submitForm()">
+        <div class="mb-3">
+          <label for="title" class="form-label">Project Title</label>
+          <input type="text" [(ngModel)]="project.title" name="title" id="title" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="techStack" class="form-label">Tech Stack</label>
+          <input type="text" [(ngModel)]="project.techStack" name="techStack" id="techStack" class="form-control" />
+        </div>
+
+        <div class="mb-3 row">
+          <div class="col-md-4">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" [(ngModel)]="startDateInput" name="startDate" id="startDate"
+              class="form-control" required />
+          </div>
+          <div class="col-md-4">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" [(ngModel)]="endDateInput" name="endDate" id="endDate"
+              class="form-control" [disabled]="currentlyWorking" [required]="!currentlyWorking" />
+          </div>
+          <div class="col-md-4 d-flex align-items-end">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="currentlyWorking"
+                name="currentlyWorking" id="currentlyWorking" />
+              <label class="form-check-label ms-1" for="currentlyWorking">
+                Currently Working
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea [(ngModel)]="project.description" name="description" id="description"
+            class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="github" class="form-label">GitHub URL</label>
+          <input type="url" [(ngModel)]="project.github" name="github" id="github"
+            class="form-control" required />
+        </div>
+
+        <div class="mb-4">
+          <label for="demo" class="form-label">Live Demo URL (Optional)</label>
+          <input type="url" [(ngModel)]="project.demo" name="demo" id="demo"
+            class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-sm">
+          <i class="bi bi-check2-circle me-1"></i> Update
+        </button>
+        <button class="btn btn-secondary btn-sm ms-2" routerLink="/projects" type="button">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
