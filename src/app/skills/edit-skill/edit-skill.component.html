@@ -1,0 +1,57 @@
+<div class="container py-4">
+    <div class="mb-4">
+      <a routerLink="/skills" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Back to Skills
+      </a>
+    </div>
+  
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title mb-4">Edit Skill</h5>
+  
+        <form (ngSubmit)="submitForm()">
+          <div class="mb-3">
+            <label for="name" class="form-label">Skill Name</label>
+            <input type="text" [(ngModel)]="skill.name" name="name" id="name"
+                   class="form-control" required />
+          </div>
+  
+          <div class="mb-3">
+            <label for="skillCategory" class="form-label">Category</label>
+            <select [(ngModel)]="skill.skillCategory" name="skillCategory"
+                    id="skillCategory" class="form-select" required>
+              <option *ngFor="let cat of skillCategories" [value]="cat">{{ cat }}</option>
+            </select>
+          </div>
+  
+          <div class="mb-3">
+            <label for="proficiency" class="form-label">Proficiency</label>
+            <select [(ngModel)]="skill.proficiency" name="proficiency"
+                    id="proficiency" class="form-select" required>
+              <option *ngFor="let prof of proficiencies" [value]="prof">{{ prof }}</option>
+            </select>
+          </div>
+  
+          <div class="mb-3">
+            <label for="iconUrl" class="form-label">Icon URL (optional)</label>
+            <input type="url" [(ngModel)]="skill.iconUrl" name="iconUrl" id="iconUrl"
+                   class="form-control" />
+          </div>
+  
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea [(ngModel)]="skill.description" name="description" id="description"
+                      class="form-control" rows="3" required></textarea>
+          </div>
+  
+          <button type="submit" class="btn btn-primary btn-sm">
+            <i class="bi bi-check2-circle me-1"></i> Update
+          </button>
+          <button class="btn btn-secondary btn-sm ms-2" routerLink="/skills" type="button">
+            Cancel
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

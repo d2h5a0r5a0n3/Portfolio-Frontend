@@ -1,0 +1,21 @@
+<div class="view-container container py-5" *ngIf="education">
+  <div class="mb-4">
+    <a routerLink="/educations" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i> Back to Education
+    </a>
+  </div>
+
+  <h2 class="project-title mb-2">{{ education.degree }}</h2>
+  <div class="text-muted mb-1">{{ education.institution }} | {{ education.fieldOfStudy }}</div>
+
+  <div class="mb-3 text-secondary small">
+    <i class="bi bi-calendar-event me-1"></i>
+    {{ education.startDate | date: 'MMM yyyy' }} -
+    {{ education.endDate ? (education.endDate | date: 'MMM yyyy') : 'Present' }}
+  </div>
+
+  <div class="project-description p-4 shadow-sm bg-light rounded">
+    <h5 class="mb-3 text-muted">Education Description</h5>
+    <p class="mb-0">{{ education.description }}</p>
+  </div>
+</div>

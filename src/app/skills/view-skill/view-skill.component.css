@@ -1,0 +1,26 @@
+.view-container {
+    max-width: 900px;
+    margin: auto;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  .skill-title {
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--text-color);
+  }
+  
+  .skill-description {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: var(--card-color);
+    border-left: 4px solid var(--accent-color);
+  }
+  
+  .skill-icon {
+    height: 24px;
+    vertical-align: middle;
+  }
+  

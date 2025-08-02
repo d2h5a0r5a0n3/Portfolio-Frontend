@@ -1,0 +1,24 @@
+<div class="skill-container">
+    <div class="timeline-wrapper">
+      <div class="timeline-line"></div>
+      <div class="timeline-dot" *ngFor="let skill of skills; let i = index"
+           [ngStyle]="{ top: 'calc(' + i + ' * (70vh + 60px) + 35vh)' }"
+           [matTooltip]="skill.name"
+           matTooltipPosition="right"
+           matTooltipClass="timeline-tooltip"></div>
+    </div>
+  
+    <div class="skill-content">
+      <div class="skill-header d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">My Skills</h2>
+        <button *ngIf="isAdmin" class="btn btn-primary btn-sm" (click)="goToAddSkill()">
+          <i class="bi bi-plus-circle me-1"></i> Add Skill
+        </button>
+      </div>
+  
+      <div class="skill-entry" *ngFor="let skill of skills" [@fadeInUp]>
+        <app-skill-card *ngIf="skill" [skill]="skill" (deleteSkill)="deleteSkill($event)"></app-skill-card>
+      </div>
+    </div>
+  </div>
+  

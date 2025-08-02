@@ -149,3 +149,17 @@ textarea.form-control:focus {
   background-color: var(--form-bg);
   color: var(--text-color);
 }
+select.form-select {
+  background-color: var(--form-bg);
+  color: var(--text-color);
+  border: 1px solid var(--form-border);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+select.form-select:focus {
+  border-color: var(--form-focus);
+  background-color: var(--form-bg);
+  color: var(--text-color);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25), 0 2px 8px rgba(0, 123, 255, 0.2);
+}

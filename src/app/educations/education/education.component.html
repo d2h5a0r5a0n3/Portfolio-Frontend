@@ -1,0 +1,26 @@
+<div class="education-container">
+  <div class="timeline-wrapper">
+    <div class="timeline-line"></div>
+    <div class="timeline-dot" *ngFor="let education of educations; let i = index"
+         [ngStyle]="{ top: 'calc(' + i + ' * (70vh + 60px) + 35vh)' }"
+         [matTooltip]="education.institution"
+         matTooltipPosition="right"
+         matTooltipClass="timeline-tooltip"></div>
+  </div>
+
+  <div class="education-content">
+    <div class="education-header d-flex justify-content-between align-items-center mb-4">
+      <h2 class="mb-0">My Education</h2>
+      <button *ngIf="isAdmin" class="btn btn-primary btn-sm" (click)="goToAddEducation()">
+        <i class="bi bi-plus-circle me-1"></i> Add Education
+      </button>
+    </div>
+
+    <div class="education-entry" *ngFor="let education of educations" [@fadeInUp]>
+      <app-education-card
+        [education]="education"
+        (deleteEducation)="deleteEducation($event)">
+      </app-education-card>
+    </div>
+  </div>
+</div>

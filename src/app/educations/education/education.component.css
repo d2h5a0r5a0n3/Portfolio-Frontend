@@ -1,4 +1,5 @@
-.project-container {
+/* Layout Wrapper */
+.education-container {
   display: flex;
   position: relative;
   background-color: var(--bg-color);
@@ -7,11 +8,13 @@
   min-height: 100vh;
 }
 
+/* Timeline Column */
 .timeline-wrapper {
   width: 80px;
   position: relative;
 }
 
+/* Vertical Line */
 .timeline-line {
   position: absolute;
   left: 50%;
@@ -23,6 +26,7 @@
   z-index: 1;
 }
 
+/* Dots */
 .timeline-dot {
   position: absolute;
   left: 50%;
@@ -41,30 +45,35 @@
   cursor: pointer;
 }
 
+/* Tooltip */
 ::ng-deep .timeline-tooltip {
   font-size: 0.85rem;
   background-color: var(--accent-color);
   color: #fff;
 }
 
-.project-content {
+/* Cards Column */
+.education-content {
   flex: 1;
   width: 70%;
   margin-left: 2rem;
 }
 
-.project-entry {
+/* Card Wrapper */
+.education-entry {
   margin-bottom: 60px;
   position: relative;
 }
 
-app-project-card {
+/* Education Card */
+app-education-card {
   display: block;
   height: 70vh;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
-  .project-container {
+  .education-container {
     flex-direction: column;
   }
 
@@ -72,12 +81,12 @@ app-project-card {
     display: none;
   }
 
-  .project-content {
+  .education-content {
     width: 100%;
     margin-left: 0;
   }
 
-  app-project-card {
+  app-education-card {
     height: auto;
   }
 }

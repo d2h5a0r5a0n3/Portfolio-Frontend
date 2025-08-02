@@ -23,6 +23,14 @@
         </div>
 
         <div class="mb-3">
+          <label for="jobType" class="form-label">Job Type</label>
+          <select [(ngModel)]="experience.jobType" name="jobType" id="jobType"
+                  class="form-select" required>
+            <option *ngFor="let type of jobTypes" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
           <label for="location" class="form-label">Location</label>
           <input type="text" [(ngModel)]="experience.location" name="location" id="location"
                  class="form-control" required placeholder="e.g. Bengaluru, India">

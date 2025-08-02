@@ -1,0 +1,21 @@
+<div class="view-container container py-5" *ngIf="skill">
+    <div class="mb-4">
+      <a routerLink="/skills" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Back to Skills
+      </a>
+    </div>
+  
+    <h2 class="skill-title mb-2">{{ skill.name }}</h2>
+    <div class="text-muted mb-1">{{ skill.skillCategory }} | {{ skill.proficiency }}</div>
+  
+    <div class="mb-3 text-secondary small" *ngIf="skill.iconUrl">
+      <i class="bi bi-image me-1"></i> Icon:
+      <img [src]="skill.iconUrl" alt="Skill Icon" class="skill-icon ms-2" />
+    </div>
+  
+    <div class="skill-description p-4 shadow-sm bg-light rounded">
+      <h5 class="mb-3 text-muted">Skill Description</h5>
+      <p class="mb-0">{{ skill.description }}</p>
+    </div>
+  </div>
+  

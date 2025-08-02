@@ -1,0 +1,58 @@
+<div class="container py-5">
+    <div class="mb-4">
+      <a routerLink="/skills" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Back to Skills
+      </a>
+    </div>
+  
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title mb-4 text-center">Add New Skill</h4>
+  
+        <form (ngSubmit)="submitForm()" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="name" class="form-label">Skill Name</label>
+            <input type="text" [(ngModel)]="skill.name" name="name" id="name"
+                   class="form-control" required placeholder="e.g. Angular, Java, Git">
+          </div>
+  
+          <div class="mb-3">
+            <label for="skillCategory" class="form-label">Category</label>
+            <select [(ngModel)]="skill.skillCategory" name="skillCategory" id="skillCategory"
+                    class="form-select" required>
+              <option *ngFor="let cat of skillCategories" [value]="cat">{{ cat }}</option>
+            </select>
+          </div>
+  
+          <div class="mb-3">
+            <label for="proficiency" class="form-label">Proficiency</label>
+            <select [(ngModel)]="skill.proficiency" name="proficiency" id="proficiency"
+                    class="form-select" required>
+              <option *ngFor="let level of proficiencies" [value]="level">{{ level }}</option>
+            </select>
+          </div>
+  
+          <div class="mb-3">
+            <label for="iconUrl" class="form-label">Icon URL (optional)</label>
+            <input type="url" [(ngModel)]="skill.iconUrl" name="iconUrl" id="iconUrl"
+                   class="form-control" placeholder="https://cdn.jsdelivr.net/.../java.svg">
+          </div>
+  
+          <div class="mb-4">
+            <label for="description" class="form-label">Description</label>
+            <textarea [(ngModel)]="skill.description" name="description" id="description"
+                      rows="4" class="form-control"
+                      placeholder="Describe your skill, e.g., where you used it or how experienced you are..."
+                      required></textarea>
+          </div>
+  
+          <div class="text-end">
+            <button type="submit" class="btn btn-success">
+              <i class="bi bi-plus-circle me-1"></i> Add Skill
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,21 @@
+<div class="resume-wrapper" [class.admin-padding]="isAdmin">
+  <button
+    *ngIf="isAdmin"
+    class="btn btn-outline-primary btn-sm choose-resume-btn"
+    (click)="openResumeChooser()"
+  >
+    <i class="bi bi-upload me-1"></i> Choose Resume
+  </button>
+
+  <div class="resume-frame-container">
+    <iframe
+      *ngIf="sanitizedUrl; else noResume"
+      [src]="sanitizedUrl"
+      class="resume-iframe"
+    ></iframe>
+
+    <ng-template #noResume>
+      <p class="text-muted text-center mt-4">No active resume available.</p>
+    </ng-template>
+  </div>
+</div>

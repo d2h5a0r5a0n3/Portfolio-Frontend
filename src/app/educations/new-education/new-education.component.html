@@ -1,0 +1,69 @@
+<p>new-education works!</p>
+<div class="container py-5">
+  <div class="mb-4">
+    <a routerLink="/education" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i> Back to Education
+    </a>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h4 class="card-title mb-4 text-center">Add New Education</h4>
+
+      <form (ngSubmit)="submitForm()" class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label for="institution" class="form-label">Institution</label>
+          <input type="text" [(ngModel)]="education.institution" name="institution" id="institution"
+                 class="form-control" required placeholder="e.g. Indian Institute of Technology">
+        </div>
+
+        <div class="mb-3">
+          <label for="degree" class="form-label">Degree</label>
+          <input type="text" [(ngModel)]="education.degree" name="degree" id="degree"
+                 class="form-control" required placeholder="e.g. B.Tech">
+        </div>
+
+        <div class="mb-3">
+          <label for="fieldOfStudy" class="form-label">Field of Study</label>
+          <input type="text" [(ngModel)]="education.fieldOfStudy" name="fieldOfStudy" id="fieldOfStudy"
+                 class="form-control" placeholder="e.g. Computer Science" required>
+        </div>
+
+        <div class="mb-3 row">
+          <div class="col-md-6">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" [(ngModel)]="startDateInput" name="startDate" id="startDate"
+                   class="form-control" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" [(ngModel)]="endDateInput" name="endDate" id="endDate"
+                   class="form-control" [disabled]="currentlyStudying" [required]="!currentlyStudying">
+          </div>
+        </div>
+
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="currentlyStudying"
+                 name="currentlyStudying" id="currentlyStudying">
+          <label class="form-check-label" for="currentlyStudying">
+            Currently Studying
+          </label>
+        </div>
+
+        <div class="mb-4">
+          <label for="description" class="form-label">Description</label>
+          <textarea [(ngModel)]="education.description" name="description" id="description"
+                    rows="4" class="form-control" placeholder="Describe your coursework, achievements, etc."
+                    required></textarea>
+        </div>
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-success">
+            <i class="bi bi-plus-circle me-1"></i> Add Education
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="container resume-chooser-container mx-auto border rounded shadow-sm p-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0">Select a Resume</h4>
+    <button
+      type="button"
+      class="btn btn-success btn-sm d-flex align-items-center"
+      (click)="triggerFileInput()"
+    >
+      <i class="bi bi-plus-circle me-1"></i> Add Resume
+    </button>
+  </div>
+
+  <form (ngSubmit)="setActiveResume()">
+    <div
+      *ngFor="let resume of resumes; trackBy: trackById"
+      class="resume-card d-flex align-items-center justify-content-between p-3 rounded mb-3"
+      [ngClass]="{
+        'resume-active': resume.active,
+        'resume-inactive': !resume.active
+      }"
+    >
+      <div class="d-flex align-items-center gap-3 flex-grow-1">
+        <input
+          type="radio"
+          name="resume"
+          [value]="resume"
+          [(ngModel)]="selectedResume"
+          class="form-check-input mt-0"
+        />
+        <div>
+          <span class="fw-semibold">{{ resume.originalName }}</span>
+          <span *ngIf="resume.active" class="badge bg-primary ms-2">Active</span>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button
+          class="btn btn-sm btn-outline-secondary"
+          type="button"
+          title="View Resume"
+          (click)="viewResume(resume.filename)"
+        >
+          <i class="bi bi-eye"></i>
+        </button>
+        <button
+          class="btn btn-sm btn-outline-danger"
+          type="button"
+          (click)="deleteResume(resume.id)"
+          [disabled]="resume.active"
+          [title]="resume.active ? 'Cannot delete active resume' : 'Delete Resume'"
+        >
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end mt-4">
+      <button
+        type="submit"
+        class="btn btn-primary d-flex align-items-center"
+        [disabled]="!selectedResume"
+      >
+        <i class="bi bi-check-circle me-1"></i> Set Active Resume
+      </button>
+    </div>
+
+    <input
+      type="file"
+      #fileInput
+      hidden
+      (change)="uploadResume($event)"
+      accept=".pdf,.docx"
+    />
+  </form>
+</div>
