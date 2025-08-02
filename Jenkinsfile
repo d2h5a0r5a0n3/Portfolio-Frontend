@@ -27,7 +27,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 echo '🏗️ Building Angular Application...'
-                bat 'npm run build'
+                bat 'npm run build -- --configuration=production'
             }
         }
 
