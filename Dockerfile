@@ -11,7 +11,10 @@ RUN npm run build -- --configuration=production
 # Production stage
 FROM nginx:alpine
 
-# Ensure path is correct - check `angular.json` outputPath!
+# Remove default nginx files
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy Angular build files
 COPY --from=build /app/dist/portifolio/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
