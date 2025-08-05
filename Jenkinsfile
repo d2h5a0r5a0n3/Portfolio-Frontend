@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/d2h5a0r5a0n3/Portfolio-UI.git', credentialsId: 'github-credentials'
+                git branch: 'master', url: 'https://github.com/d2h5a0r5a0n3/Portfolio-Frontend.git', credentialsId: 'github-credentials'
             }
         }
 
