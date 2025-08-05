@@ -58,6 +58,12 @@ pipeline {
 
                     echo '🚀 Starting frontend service...'
                     bat "docker run -d --name portfolio-frontend -p ${FRONTEND_PORT}:80 --network portfolio-network portfolio-frontend"
+                    
+                    echo '🔍 Verifying container is running...'
+                    bat 'docker ps -f name=portfolio-frontend'
+                    
+                    echo '📋 Checking container logs...'
+                    bat 'docker logs portfolio-frontend'
                 }
             }
         }
