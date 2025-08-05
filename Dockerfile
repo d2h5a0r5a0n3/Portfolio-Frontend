@@ -3,11 +3,11 @@ FROM node:18-alpine AS build
 
 WORKDIR /app
 
-# Copy package files
+# Copy package files first for better caching
 COPY package*.json ./
 
-# Install all dependencies (including dev dependencies for build)
-RUN npm ci
+# Install dependencies with cache optimization
+RUN npm ci --cache /tmp/.npm --prefer-offline
 
 # Copy source code
 COPY . .
