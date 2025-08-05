@@ -33,8 +33,8 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                echo '🐳 Building Docker image...'
-                bat 'docker build --no-cache -t portfolio-frontend .'
+                echo '🐳 Building Docker image with cache...'
+                bat 'docker build -t portfolio-frontend .'
             }
         }
 
