@@ -53,6 +53,9 @@ pipeline {
                     // Tag current image as old for next deployment
                     bat 'docker tag portfolio-frontend portfolio-frontend:old || echo "No current image to tag"'
 
+                    echo '🌐 Creating Docker network if not exists...'
+                    bat 'docker network create portfolio-network || echo "Network already exists"'
+
                     echo '🚀 Starting frontend service...'
                     bat "docker run -d --name portfolio-frontend -p ${FRONTEND_PORT}:80 --network portfolio-network portfolio-frontend"
                 }
