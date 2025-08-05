@@ -44,17 +44,17 @@ pipeline {
                     echo '🧹 Cleaning up existing frontend container...'
                     
                     // Stop and remove existing frontend container
-                    bat 'docker stop portfolio-frontend || echo "No container to stop"'
-                    bat 'docker rm portfolio-frontend || echo "No container to remove"'
+                    bat 'docker stop portfolio-frontend 2>nul || echo "No container to stop"'
+                    bat 'docker rm portfolio-frontend 2>nul || echo "No container to remove"'
                     
                     // Remove old image
-                    bat 'docker rmi portfolio-frontend:old || echo "No old image to remove"'
+                    bat 'docker rmi portfolio-frontend:old 2>nul || echo "No old image to remove"'
                     
                     // Tag current image as old for next deployment
-                    bat 'docker tag portfolio-frontend portfolio-frontend:old || echo "No current image to tag"'
+                    bat 'docker tag portfolio-frontend portfolio-frontend:old 2>nul || echo "No current image to tag"'
 
                     echo '🌐 Creating Docker network if not exists...'
-                    bat 'docker network create portfolio-network || echo "Network already exists"'
+                    bat 'docker network create portfolio-network 2>nul || echo "Network already exists"'
 
                     echo '🚀 Starting frontend service...'
                     bat "docker run -d --name portfolio-frontend -p ${FRONTEND_PORT}:80 --network portfolio-network portfolio-frontend"
@@ -63,7 +63,7 @@ pipeline {
                     bat 'docker ps -f name=portfolio-frontend'
                     
                     echo '📋 Checking container logs...'
-                    bat 'docker logs portfolio-frontend'
+                    bat 'docker logs portfolio-frontend || echo "No logs available"'
                 }
             }
         }
