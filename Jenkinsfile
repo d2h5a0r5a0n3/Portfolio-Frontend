@@ -33,7 +33,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                echo '🐳 Building Docker image with cache...'
+                echo '🐳 Building Docker image...'
                 bat 'docker build -t portfolio-frontend .'
             }
         }
@@ -41,28 +41,26 @@ pipeline {
         stage('Deploy Frontend') {
             steps {
                 script {
-                    echo '🧹 Cleaning up existing frontend container...'
-                    
-                    // Stop and remove existing frontend container
+                    echo '🧹 Cleaning up existing frontend container and image...'
                     bat 'docker stop portfolio-frontend 2>nul || echo "No container to stop"'
                     bat 'docker rm portfolio-frontend 2>nul || echo "No container to remove"'
-                    
-                    // Remove old image
                     bat 'docker rmi portfolio-frontend:old 2>nul || echo "No old image to remove"'
-                    
-                    // Tag current image as old for next deployment
                     bat 'docker tag portfolio-frontend portfolio-frontend:old 2>nul || echo "No current image to tag"'
 
                     echo '🌐 Creating Docker network if not exists...'
                     bat 'docker network create portfolio-network 2>nul || echo "Network already exists"'
 
-                    echo '🚀 Starting frontend service...'
-                    bat "docker run -d --name portfolio-frontend -p ${FRONTEND_PORT}:80 --network portfolio-network portfolio-frontend"
-                    
-                    echo '🔍 Verifying container is running...'
+                    echo '🚀 Starting frontend container...'
+                    def runStatus = bat(script: "docker run -d --name portfolio-frontend -p ${FRONTEND_PORT}:80 --network portfolio-network portfolio-frontend", returnStatus: true)
+                    if (runStatus != 0) {
+                        echo "❌ Docker run failed with exit code ${runStatus}"
+                        bat 'docker ps -a'
+                        bat 'docker logs portfolio-frontend || echo "No logs available"'
+                        error 'Failed to start frontend container.'
+                    }
+
+                    echo '🔍 Container started. Checking logs and status...'
                     bat 'docker ps -f name=portfolio-frontend'
-                    
-                    echo '📋 Checking container logs...'
                     bat 'docker logs portfolio-frontend || echo "No logs available"'
                 }
             }
@@ -80,20 +78,18 @@ pipeline {
                             echo '✅ Frontend is accessible!'
                             healthCheckPassed = true
                         } else {
-                            echo "Health check attempt ${i + 1}/8 failed (curl exit code: ${status})"
+                            echo "⚠️ Health check attempt ${i + 1}/8 failed (curl exit code: ${status})"
                         }
                     }
 
                     if (!healthCheckPassed) {
-                        echo '⚠️ Frontend health check failed but continuing...'
-                        // Uncomment to fail the build:
-                        // error '❌ Frontend health check failed after multiple attempts.'
+                        error '❌ Frontend health check failed after multiple attempts.'
                     }
                 }
             }
         }
     }
-    
+
     post {
         success {
             echo '✅✅✅ Portfolio Frontend deployed successfully!!!'
