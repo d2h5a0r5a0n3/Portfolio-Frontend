@@ -42,13 +42,32 @@ pipeline {
             steps {
                 script {
                     echo '🧹 Cleaning up existing frontend container and image...'
-                    bat 'docker stop portfolio-frontend 2>nul || echo "No container to stop"'
-                    bat 'docker rm portfolio-frontend 2>nul || echo "No container to remove"'
-                    bat 'docker rmi portfolio-frontend:old 2>nul || echo "No old image to remove"'
-                    bat 'docker tag portfolio-frontend portfolio-frontend:old 2>nul || echo "No current image to tag"'
+
+                    def stopStatus = bat(script: 'docker stop portfolio-frontend 2>nul', returnStatus: true)
+                    if (stopStatus != 0) {
+                        echo 'No container to stop'
+                    }
+
+                    def rmStatus = bat(script: 'docker rm portfolio-frontend 2>nul', returnStatus: true)
+                    if (rmStatus != 0) {
+                        echo 'No container to remove'
+                    }
+
+                    def rmiStatus = bat(script: 'docker rmi portfolio-frontend:old 2>nul', returnStatus: true)
+                    if (rmiStatus != 0) {
+                        echo 'No old image to remove'
+                    }
+
+                    def tagStatus = bat(script: 'docker tag portfolio-frontend portfolio-frontend:old 2>nul', returnStatus: true)
+                    if (tagStatus != 0) {
+                        echo 'No current image to tag'
+                    }
 
                     echo '🌐 Creating Docker network if not exists...'
-                    bat 'docker network create portfolio-network 2>nul || echo "Network already exists"'
+                    def netStatus = bat(script: 'docker network create portfolio-network 2>nul', returnStatus: true)
+                    if (netStatus != 0) {
+                        echo 'Network already exists'
+                    }
 
                     echo '🚀 Starting frontend container...'
                     def runStatus = bat(script: "docker run -d --name portfolio-frontend -p ${FRONTEND_PORT}:80 --network portfolio-network portfolio-frontend", returnStatus: true)
@@ -65,6 +84,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('Verify Frontend') {
             steps {
