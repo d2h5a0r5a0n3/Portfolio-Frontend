@@ -1,0 +1,58 @@
+{
+  "editor.fontFamily": "'JetBrains Mono'",
+  "editor.fontSize": 14,
+  "editor.fontLigatures": "'calt' off, 'liga' off",
+  "editor.lineHeight": 28,
+
+  "editor.semanticHighlighting.enabled": false,
+
+  "editor.guides.indentation": true,
+  "editor.guides.highlightActiveIndentation": false,
+
+  "editor.minimap.enabled": false,
+  "breadcrumbs.enabled": false,
+
+  "editor.smoothScrolling": true,
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+
+  "editor.padding.top": 12,
+  "editor.scrollBeyondLastLine": false,
+  "editor.renderWhitespace": "selection",
+
+  "editor.bracketPairColorization.enabled": false,
+  "editor.matchBrackets": "near",
+
+  "editor.occurrencesHighlight": "off",
+  "editor.selectionHighlight": false,
+  "editor.codeLens": false,
+
+  "window.zoomLevel": 0,
+
+  "workbench.colorCustomizations": {
+    "editorIndentGuide.background1": "#2b2b2b",
+    "editorIndentGuide.activeBackground1": "#3a3a3a",
+
+    "editorLineNumber.foreground": "#5f5f5f",
+    "editorLineNumber.activeForeground": "#9a9a9a",
+
+    "editor.selectionBackground": "#21428355",
+    "editor.lineHighlightBackground": "#ffffff08",
+
+    "editorCursor.foreground": "#c7c7c7"
+  },
+
+  "explorer.compactFolders": false,
+  "workbench.tree.renderIndentGuides": "none",
+  "workbench.tree.indent": 12,
+
+  "explorer.decorations.badges": false,
+  "explorer.decorations.colors": false,
+
+  "terminal.integrated.fontFamily": "'JetBrains Mono'",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.lineHeight": 1,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.smoothScrolling": true,
+  "terminal.integrated.tabs.enabled": false
+}

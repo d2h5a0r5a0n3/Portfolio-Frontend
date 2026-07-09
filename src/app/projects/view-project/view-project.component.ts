@@ -13,7 +13,7 @@ export class ViewProjectComponent implements OnInit {
 	project!: Project;
 	constructor(private route: ActivatedRoute, private projectService: ProjectService) { }
 	ngOnInit(): void {
-		const id = Number(this.route.snapshot.paramMap.get('id'));
+		const id = this.route.snapshot.paramMap.get('id')!;
 		this.projectService.getProjectById(id).subscribe((data) => {
 			this.project = data;
 		});

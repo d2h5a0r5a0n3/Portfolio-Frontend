@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { QuillEditorComponent } from 'ngx-quill';
 import { EducationService } from '../../service/education-service/education.service';
 import { Education } from '../education';
 
 @Component({
   selector: 'app-edit-education',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, QuillEditorComponent],
   templateUrl: './edit-education.component.html'
 })
 export class EditEducationComponent implements OnInit {
@@ -21,7 +22,7 @@ export class EditEducationComponent implements OnInit {
     description: ''
   };
 
-  id!: number;
+  id!: string;
   startDateInput: string = '';
   endDateInput: string = '';
   currentlyStudying: boolean = false;
@@ -33,7 +34,7 @@ export class EditEducationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = +this.route.snapshot.paramMap.get('id')!;
+    this.id = this.route.snapshot.paramMap.get('id')!;
     this.service.getEducationById(this.id).subscribe((data) => {
       this.education = data;
       this.startDateInput = this.education.startDate
@@ -46,7 +47,7 @@ export class EditEducationComponent implements OnInit {
     });
   }
 
-  submitForm(): void {
+  async submitForm(): Promise<void> {
     const start = new Date(this.startDateInput);
     const end = this.currentlyStudying ? undefined : new Date(this.endDateInput);
 
@@ -61,8 +62,7 @@ export class EditEducationComponent implements OnInit {
     this.education.startDate = start;
     this.education.endDate = end;
 
-    this.service.updateEducation(this.id, this.education).subscribe(() => {
-      this.router.navigate(['/educations']);
-    });
+    await this.service.updateEducation(this.id, this.education);
+    this.router.navigate(['/educations']);
   }
 }

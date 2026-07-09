@@ -16,7 +16,7 @@ export class ViewExperienceComponent implements OnInit {
   constructor(private route: ActivatedRoute, private experienceService: ExperienceService) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = this.route.snapshot.paramMap.get('id')!;
     this.experienceService.getExperienceById(id).subscribe((data) => {
       this.experience = data;
     });

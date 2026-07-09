@@ -17,7 +17,7 @@ export class ViewSkillComponent implements OnInit {
   constructor(private route: ActivatedRoute, private skillService: SkillService) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = this.route.snapshot.paramMap.get('id')!;
     this.skillService.getSkill(id).subscribe((data) => {
       this.skill = data;
     });

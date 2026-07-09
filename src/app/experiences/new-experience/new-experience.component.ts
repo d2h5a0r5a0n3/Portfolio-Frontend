@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { QuillEditorComponent } from 'ngx-quill';
 import { ExperienceService, Experience } from '../../service/experience-service/experience.service';
 
 @Component({
     selector: 'app-new-experience',
     standalone: true,
-    imports: [CommonModule, FormsModule, RouterLink],
+    imports: [CommonModule, FormsModule, RouterLink, QuillEditorComponent],
     templateUrl: './new-experience.component.html'
 })
 export class NewExperienceComponent implements OnInit {
@@ -32,7 +33,7 @@ export class NewExperienceComponent implements OnInit {
         })
     }
 
-    submitForm(): void {
+    async submitForm(): Promise<void> {
         const start = new Date(this.startDateInput);
         const end = this.currentlyWorking ? undefined : new Date(this.endDateInput);
 
@@ -57,8 +58,7 @@ export class NewExperienceComponent implements OnInit {
         this.experience.startDate = start;
         this.experience.endDate = end;
 
-        this.service.addExperience(this.experience).subscribe(() => {
-            this.router.navigate(['/experiences']);
-        });
+        await this.service.addExperience(this.experience);
+        this.router.navigate(['/experiences']);
     }
 }

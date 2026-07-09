@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EducationService } from '../../service/education-service/education.service';
 import { AuthService } from '../../service/auth-service/auth.service';
 import { Router } from '@angular/router';
-import { NgFor, NgIf, NgStyle } from '@angular/common';
+import { NgFor, NgIf, NgStyle, DatePipe } from '@angular/common';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { EducationCardComponent } from '../education-card/education-card.component';
 import { trigger, style, animate, transition } from '@angular/animations';
@@ -20,7 +20,7 @@ import { Education } from '../education';
     ])
   ],
   standalone: true,
-  imports: [NgIf, NgFor, MatSnackBarModule, EducationCardComponent, NgStyle, MatTooltipModule],
+  imports: [NgIf, NgFor, MatSnackBarModule, EducationCardComponent, NgStyle, MatTooltipModule, DatePipe],
   templateUrl: './education.component.html',
   styleUrls: ['./education.component.css']
 })
@@ -42,7 +42,7 @@ export class EducationComponent implements OnInit {
     });
 
     this.educationService.getEducations().subscribe((data) => {
-      this.educations = data;
+      this.educations = data.sort((a, b) => (a.order || 0) - (b.order || 0));
     });
   }
 
@@ -50,12 +50,11 @@ export class EducationComponent implements OnInit {
     this.router.navigate(['/new-education']);
   }
 
-  deleteEducation(id: number): void {
-    this.educationService.deleteEducation(id).subscribe(() => {
-      this.educations = this.educations.filter(e => e.id !== id);
-      this.snackBar.open('Education deleted successfully', 'Close', {
-        duration: 3000
-      });
+  async deleteEducation(id: string): Promise<void> {
+    await this.educationService.deleteEducation(id);
+    this.educations = this.educations.filter(e => e.id !== id);
+    this.snackBar.open('Education deleted successfully', 'Close', {
+      duration: 3000
     });
   }
 }

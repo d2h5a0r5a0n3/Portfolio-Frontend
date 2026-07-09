@@ -1,18 +1,22 @@
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../service/auth-service/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
   isDark = false;
+  isAdmin$: Observable<boolean>;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private authService: AuthService) {
+    this.isAdmin$ = this.authService.isAdmin$;
     if (isPlatformBrowser(this.platformId)) {
       this.isDark = localStorage.getItem('theme') === 'dark';
       this.applyTheme();

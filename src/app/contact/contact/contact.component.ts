@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ContactForm, ContactService } from '../../service/contact-service/contact.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
@@ -20,7 +19,7 @@ export class ContactComponent {
   };
   success = false;
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar, private contactService: ContactService) { }
+  constructor(private snackBar: MatSnackBar, private contactService: ContactService) { }
 
   sendMessage() {
     this.contactService.sendMessage(this.form).subscribe({

@@ -28,6 +28,11 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact</a>
             </li>
+            <li class="nav-item" *ngIf="isAdmin$ | async">
+                <a class="nav-link text-warning fw-bold" routerLink="/messages" routerLinkActive="active">
+                    <i class="bi bi-inbox-fill me-1"></i> Inbox
+                </a>
+            </li>
             <li class="nav-item">
                 <button class="btn btn-sm btn-outline-light ms-3" (click)="toggleTheme()" title="Toggle Theme">
                     <i class="bi bi-circle-half"></i>

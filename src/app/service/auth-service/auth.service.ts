@@ -1,53 +1,61 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, from } from 'rxjs';
+import { Auth, signOut, authState } from '@angular/fire/auth';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
+    private auth: Auth = inject(Auth);
 
     private adminStatusSubject = new BehaviorSubject<boolean>(false);
     isAdmin$ = this.adminStatusSubject.asObservable();
-    constructor(private http: HttpClient) { }
-    login(username: string, password: string) {
-        const encodedUsername = encodeURIComponent(username);
-        const encodedPassword = encodeURIComponent(password);
-        return this.http.post(
-            `http://localhost:9091/api/login?username=${encodedUsername}&password=${encodedPassword}`,
-            null,
-            { withCredentials: true, responseType: 'text' as 'json' }
-        );
+
+    // TODO: Change this to your actual Google email address!
+    private adminEmail = 'dharankalavena@gmail.com';
+
+    constructor() {
+        // Automatically listen to auth state changes and update the BehaviorSubject
+        authState(this.auth).subscribe((user: any) => {
+            if (user && user.email === this.adminEmail) {
+                this.adminStatusSubject.next(true);
+            } else {
+                this.adminStatusSubject.next(false);
+                if (user) {
+                    this.logout();
+                    alert("Unauthorized account. Only the admin can log in.");
+                }
+            }
+        });
     }
+
+    login() {
+        const provider = new GoogleAuthProvider();
+        return from(signInWithPopup(this.auth as any, provider));
+    }
+
     checkSessionStatus() {
-        return this.http.get<{ authenticated: boolean, username?: string }>(
-            'http://localhost:9091/api/session/status',
-            { withCredentials: true, responseType: 'text' as 'json' }
-        );
-    }
-    logout() {
-        return this.http.post(
-            'http://localhost:9091/api/logout',
-            null,
-            { withCredentials: true, responseType: 'text' as 'json' }
+        return authState(this.auth).pipe(
+            map(user => ({
+                authenticated: !!user,
+                username: user?.email || undefined
+            }))
         );
     }
 
+    logout() {
+        return from(signOut(this.auth));
+    }
 
     getAdminStatus(): Observable<{ isAdmin: boolean }> {
-        return this.http.get<{ isAdmin: boolean }>('http://localhost:9091/api/is-admin', {
-            withCredentials: true
-        });
+        return authState(this.auth).pipe(
+            map(user => ({ isAdmin: !!user }))
+        );
     }
 
     fetchAndSetAdminStatus(): void {
-        this.getAdminStatus().subscribe({
-            next: (data) => {
-                this.adminStatusSubject.next(data.isAdmin);
-            },
-            error: (err) => {
-                this.adminStatusSubject.next(false);
-            }
-        });
+        // Handled automatically in the constructor now
     }
 }

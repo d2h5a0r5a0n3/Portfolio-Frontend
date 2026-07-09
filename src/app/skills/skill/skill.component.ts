@@ -42,7 +42,7 @@ export class SkillComponent implements OnInit {
     });
 
     this.skillService.getAllSkills().subscribe((data) => {
-      this.skills = data;
+      this.skills = data.sort((a, b) => (a.order || 0) - (b.order || 0));
     });
   }
 
@@ -50,10 +50,9 @@ export class SkillComponent implements OnInit {
     this.router.navigate(['/new-skill']);
   }
 
-  deleteSkill(id: number): void {
-    this.skillService.deleteSkill(id).subscribe(() => {
-      this.skills = this.skills.filter(skill => skill.id !== id);
-      this.snackBar.open('Skill deleted successfully', 'Close', { duration: 3000 });
-    });
+  async deleteSkill(id: string): Promise<void> {
+    await this.skillService.deleteSkill(id);
+    this.skills = this.skills.filter(skill => skill.id !== id);
+    this.snackBar.open('Skill deleted successfully', 'Close', { duration: 3000 });
   }
 }

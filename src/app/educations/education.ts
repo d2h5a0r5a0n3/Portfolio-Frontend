@@ -1,5 +1,6 @@
 export interface Education {
-    id?: number;
+    id?: string;
+    order?: number;
     institution: string;
     degree: string;
     fieldOfStudy: string;

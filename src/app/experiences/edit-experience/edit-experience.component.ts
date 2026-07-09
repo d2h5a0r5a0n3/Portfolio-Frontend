@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { QuillEditorComponent } from 'ngx-quill';
 import { ExperienceService, Experience } from '../../service/experience-service/experience.service';
 
 @Component({
   selector: 'app-edit-experience',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, QuillEditorComponent],
   templateUrl: './edit-experience.component.html'
 })
 export class EditExperienceComponent implements OnInit {
@@ -21,7 +22,7 @@ export class EditExperienceComponent implements OnInit {
     endDate: new Date()
   };
 
-  id!: number;
+  id!: string;
   startDateInput: string = '';
   endDateInput: string = '';
   currentlyWorking: boolean = false;
@@ -33,7 +34,7 @@ export class EditExperienceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = +this.route.snapshot.paramMap.get('id')!;
+    this.id = this.route.snapshot.paramMap.get('id')!;
     this.service.getExperienceById(this.id).subscribe((data) => {
       this.experience = data;
       this.startDateInput = this.experience.startDate
@@ -46,7 +47,7 @@ export class EditExperienceComponent implements OnInit {
     });
   }
 
-  submitForm(): void {
+  async submitForm(): Promise<void> {
     const start = new Date(this.startDateInput);
     const end = this.currentlyWorking ? undefined : new Date(this.endDateInput);
 
@@ -61,8 +62,7 @@ export class EditExperienceComponent implements OnInit {
     this.experience.startDate = start;
     this.experience.endDate = end;
 
-    this.service.updateExperience(this.id, this.experience).subscribe(() => {
-      this.router.navigate(['/experiences']);
-    });
+    await this.service.updateExperience(this.id, this.experience);
+    this.router.navigate(['/experiences']);
   }
 }

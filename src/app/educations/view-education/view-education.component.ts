@@ -17,7 +17,7 @@ export class ViewEducationComponent implements OnInit {
   constructor(private route: ActivatedRoute, private service: EducationService) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = this.route.snapshot.paramMap.get('id')!;
     this.service.getEducationById(id).subscribe(data => {
       this.education = data;
     });

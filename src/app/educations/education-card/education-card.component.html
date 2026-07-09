@@ -1,28 +1,29 @@
-<div class="card h-100 shadow-sm border-0">
-  <div class="card-body d-flex flex-column">
-    <h5 class="card-title">{{ education.degree }}</h5>
-    <div class="text-muted small mb-1">{{ education.institution }} | {{ education.fieldOfStudy }}</div>
+<app-shared-card [fullHeight]="true">
+  <ng-container card-title><span class="text-gradient">{{ education.degree }} in {{ education.fieldOfStudy }}</span></ng-container>
+  
+  <ng-container card-subtitle>
+    {{ education.institution }}
+  </ng-container>
 
-    <div class="mb-2 small text-secondary">
-      <i class="bi bi-calendar-event me-1"></i>
-      {{ education.startDate | date: 'MMM yyyy' }} -
-      {{ education.endDate ? (education.endDate | date: 'MMM yyyy') : 'Present' }}
-    </div>
+  <ng-container card-date>
+    <i class="bi bi-journal-bookmark me-1"></i>
+    {{ education.startDate | date: 'MMM yyyy' }} &mdash;
+    {{ education.endDate ? (education.endDate | date: 'MMM yyyy') : 'Present' }}
+  </ng-container>
 
-    <div class="description-box flex-grow-1 mb-3">
-      {{ education.description }}
-    </div>
+  <ng-container card-description>
+    <div [innerHTML]="education.description"></div>
+  </ng-container>
 
-    <div class="d-flex justify-content-end align-items-center flex-wrap gap-2">
-      <button class="btn btn-outline-info btn-sm" (click)="viewEducation()" title="View">
-        <i class="bi bi-eye"></i>
-      </button>
-      <button *ngIf="isAdmin" class="btn btn-outline-warning btn-sm" (click)="editEducation()" title="Edit">
-        <i class="bi bi-pencil-square"></i>
-      </button>
-      <button *ngIf="isAdmin" class="btn btn-outline-danger btn-sm" (click)="onDelete()" title="Delete">
-        <i class="bi bi-trash"></i>
-      </button>
-    </div>
-  </div>
-</div>
+  <ng-container card-actions>
+    <button class="btn btn-sm d-flex align-items-center justify-content-center" (click)="viewEducation()" title="View Details" style="width: 36px; height: 36px; border-radius: 50%;">
+      <i class="bi bi-eye"></i>
+    </button>
+    <button *ngIf="isAdmin" class="btn btn-sm d-flex align-items-center justify-content-center" (click)="editEducation()" title="Edit Education" style="color: #f59e0b; width: 36px; height: 36px; border-radius: 50%;">
+      <i class="bi bi-pencil"></i>
+    </button>
+    <button *ngIf="isAdmin" class="btn btn-sm d-flex align-items-center justify-content-center" (click)="onDelete()" title="Delete Education" style="color: #ef4444; width: 36px; height: 36px; border-radius: 50%;">
+      <i class="bi bi-trash"></i>
+    </button>
+  </ng-container>
+</app-shared-card>

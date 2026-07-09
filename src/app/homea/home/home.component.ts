@@ -1,27 +1,24 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-	import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../service/auth-service/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
 	selector: 'app-home',
 	standalone: true,
-	imports: [MatSnackBarModule],
+	imports: [MatSnackBarModule, CommonModule, RouterModule],
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
 	isAdmin: boolean = false;
-	username = "Admin";
-	password = "";
+	isLoginRoute: boolean = false;
 	constructor(
 		@Inject(PLATFORM_ID) private platformId: Object,
 		private snackBar: MatSnackBar,
-		private http: HttpClient,
 		private authService: AuthService,
-		private route: ActivatedRoute,
 		private router: Router
 	) { }
 	ngOnInit(): void {
@@ -30,27 +27,33 @@ export class HomeComponent implements OnInit {
 			this.authService.isAdmin$.subscribe((status) => {
 				this.isAdmin = status;
 			})
-			const currentUrl = this.router.url;
-			if (currentUrl.startsWith('/login')) {
-				this.route.queryParamMap.subscribe(params => {
-					const pwd = params.get('password');
-					if (pwd) {
-						this.password = pwd;
-						this.login();
-					}
-				});
-			} else if (currentUrl.startsWith('/logout')) {
-				this.logout();
-			}
+			this.router.events.subscribe(() => {
+				this.checkRoute();
+			});
+			this.checkRoute();
+		}
+	}
+
+	checkRoute() {
+		const currentUrl = this.router.url;
+		if (currentUrl.startsWith('/login')) {
+			this.isLoginRoute = true;
+		} else {
+			this.isLoginRoute = false;
+		}
+		
+		if (currentUrl.startsWith('/logout')) {
+			this.logout();
 		}
 	}
 	login() {
-		this.authService.login(this.username, this.password).subscribe({
-			next: (data) => {
-				this.snackBar.open(String(data), "Close", {
+		this.authService.login().subscribe({
+			next: () => {
+				this.snackBar.open("Successfully logged in!", "Close", {
 					duration: 3000,
 					panelClass: ['snackbar-success']
 				});
+				this.router.navigate(['/']); // Redirect to home after login
 			},
 			error: (err) => {
 				console.error("Login Error:", err);
@@ -63,9 +66,9 @@ export class HomeComponent implements OnInit {
 	}
 	logout() {
 		this.authService.logout().subscribe({
-			next: (data) => {
-				console.log("Logged Out:", data);
-				this.snackBar.open(String(data), "Close", {
+			next: () => {
+				console.log("Logged Out");
+				this.snackBar.open("Successfully logged out", "Close", {
 					duration: 3000,
 					panelClass: ['snackbar-success']
 				});

@@ -1,10 +1,8 @@
 :host {
-    display: block;
-    width: 70%;
-    height: 40vh;
-  }
+  display: block;
+  width: 100%;
+}
   .card {
-    height: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -26,8 +24,4 @@
   .description-box::-webkit-scrollbar {
     width: 6px;
   }
-  .description-box::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 3px;
-  }
-  
+  /* Styles moved to SharedCardComponent */

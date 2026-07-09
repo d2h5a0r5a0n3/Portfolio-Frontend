@@ -1,25 +1,34 @@
-import { Component, Input, Output, EventEmitter, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  PLATFORM_ID,
+  Inject,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule, isPlatformBrowser, NgIf } from '@angular/common';
 import { Project } from '../../service/project-service/project.service';
 import { AuthService } from '../../service/auth-service/auth.service';
+import { SharedCardComponent } from '../../shared/shared-card/shared-card.component';
 
 @Component({
   selector: 'app-project-card',
   standalone: true,
-  imports: [NgIf, CommonModule],
+  imports: [NgIf, CommonModule, SharedCardComponent],
   templateUrl: './project-card.component.html',
-  styleUrls: ['./project-card.component.css']
+  styleUrls: ['./project-card.component.css'],
 })
 export class ProjectCardComponent implements OnInit {
   @Input() project!: Project;
-  @Output() deleteProject = new EventEmitter<number>();
+  @Output() deleteProject = new EventEmitter<string>();
   isAdmin: boolean = false;
 
   constructor(
     private router: Router,
     private authService: AuthService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
   ngOnInit(): void {

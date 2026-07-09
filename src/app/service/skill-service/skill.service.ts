@@ -1,42 +1,47 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Skill } from '../../dto/skill/skill';
+import { Firestore, collectionData, docData, addDoc, collection, deleteDoc, doc, updateDoc } from '@angular/fire/firestore';
 
 @Injectable({ providedIn: 'root' })
 export class SkillService {
-  private apiUrl = '/api';
-
-  constructor(private http: HttpClient) {}
+  private fireStore: Firestore = inject(Firestore);
+  private skillsCollection = collection(this.fireStore, 'skills');
 
   getAllSkills(): Observable<Skill[]> {
-    return this.http.get<Skill[]>(`${this.apiUrl}/skills`);
+    return collectionData(this.skillsCollection, { idField: 'id' }) as Observable<Skill[]>;
   }
 
-  getSkill(id: number): Observable<Skill> {
-    return this.http.get<Skill>(`${this.apiUrl}/skills/${id}`);
+  getSkill(id: string): Observable<Skill> {
+    const skillDoc = doc(this.fireStore, `skills/${id}`);
+    return docData(skillDoc, { idField: 'id' }) as Observable<Skill>;
   }
 
-  saveSkill(skill: Skill): Observable<Skill> {
-    return skill.id
-      ? this.http.put<Skill>(`${this.apiUrl}/skills/${skill.id}`, skill)
-      : this.http.post<Skill>(`${this.apiUrl}/skills`, skill);
+  async saveSkill(skill: Skill): Promise<void> {
+    if (skill.id) {
+      const skillDoc = doc(this.fireStore, `skills/${skill.id}`);
+      const dataToSave = { ...skill };
+      delete dataToSave.id;
+      await updateDoc(skillDoc, dataToSave);
+    } else {
+      await addDoc(this.skillsCollection, skill);
+    }
   }
 
-  deleteSkill(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/skills/${id}`);
+  async deleteSkill(id: string): Promise<void> {
+    const skillDoc = doc(this.fireStore, `skills/${id}`);
+    await deleteDoc(skillDoc);
   }
 
   getProficiencies(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/enums/proficiencies`);
+    return of(['BEGINNER', 'INTERMEDIATE', 'ADVANCED', 'EXPERT']);
   }
 
   getSkillCategories(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/enums/skill-categories`);
+    return of(['FRONTEND', 'BACKEND', 'DATABASE', 'DEVOPS', 'OTHER']);
   }
 
   getSkillActions(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/enums/skill-actions`);
+    return of(['LEARNING', 'USING', 'MASTERING']);
   }
 }
-

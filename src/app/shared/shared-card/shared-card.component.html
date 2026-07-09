@@ -1,0 +1,27 @@
+<div class="premium-card d-flex flex-column" [ngClass]="{ 'h-100': fullHeight }">
+  <div class="card-body p-4 d-flex flex-column">
+    <h4 class="card-title mb-1">
+      <ng-content select="[card-title]"></ng-content>
+    </h4>
+    
+    <div class="card-subtitle mb-2 fw-medium">
+      <ng-content select="[card-subtitle]"></ng-content>
+    </div>
+    
+    <div class="mb-3 d-flex flex-wrap gap-2">
+       <ng-content select="[card-badges]"></ng-content>
+    </div>
+
+    <div class="card-date mb-3 small">
+      <ng-content select="[card-date]"></ng-content>
+    </div>
+
+    <div class="description-box mb-4" [ngClass]="{ 'flex-grow-1': fullHeight }">
+       <ng-content select="[card-description]"></ng-content>
+    </div>
+
+    <div class="d-flex align-items-center mt-auto flex-wrap gap-2" [ngClass]="justifyActions">
+       <ng-content select="[card-actions]"></ng-content>
+    </div>
+  </div>
+</div>

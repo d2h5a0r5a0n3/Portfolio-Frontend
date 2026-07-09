@@ -11,17 +11,18 @@ import { Router } from '@angular/router';
 import { isPlatformBrowser, CommonModule, NgIf } from '@angular/common';
 import { AuthService } from '../../service/auth-service/auth.service';
 import { Education } from '../education';
+import { SharedCardComponent } from '../../shared/shared-card/shared-card.component';
 
 @Component({
   selector: 'app-education-card',
   standalone: true,
-  imports: [NgIf, CommonModule],
+  imports: [NgIf, CommonModule, SharedCardComponent],
   templateUrl: './education-card.component.html',
   styleUrls: ['./education-card.component.css']
 })
 export class EducationCardComponent implements OnInit {
   @Input() education!: Education;
-  @Output() deleteEducation = new EventEmitter<number>();
+  @Output() deleteEducation = new EventEmitter<string>();
   isAdmin: boolean = false;
 
   constructor(

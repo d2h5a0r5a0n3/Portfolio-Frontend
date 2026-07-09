@@ -29,18 +29,22 @@
 /* Dots */
 .timeline-dot {
   position: absolute;
-  left: 50%;
-  width: 16px;
-  height: 16px;
+  top: 32px;
+  left: calc(-2rem - 40px);
   background-color: var(--accent-color);
-  border-radius: 50%;
+  color: #fff;
+  border-radius: 12px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  font-weight: bold;
   transform: translate(-50%, -50%);
   z-index: 2;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  white-space: nowrap;
 }
 
 .timeline-dot:hover {
-  transform: translate(-50%, -50%) scale(1.4);
+  transform: translate(-50%, -50%) scale(1.1);
   box-shadow: 0 0 10px var(--accent-color);
   cursor: pointer;
 }
@@ -65,12 +69,6 @@
   position: relative;
 }
 
-/* Experience Card */
-app-experience-card {
-  display: block;
-  height: 70vh;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
   .experience-container {
@@ -84,9 +82,5 @@ app-experience-card {
   .experience-content {
     width: 100%;
     margin-left: 0;
-  }
-
-  app-experience-card {
-    height: auto;
   }
 }

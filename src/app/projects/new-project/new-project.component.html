@@ -44,8 +44,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea id="description" [(ngModel)]="project.description" name="description" rows="4"
-                        class="form-control" placeholder="Brief project overview" required></textarea>
+                    <quill-editor id="description" [(ngModel)]="project.description" name="description"
+                        [styles]="{height: '250px'}" [required]="true"></quill-editor>
                 </div>
                 <div class="mb-3">
                     <label for="github" class="form-label">GitHub URL</label>

@@ -40,10 +40,8 @@
   
           <div class="mb-4">
             <label for="description" class="form-label">Description</label>
-            <textarea [(ngModel)]="skill.description" name="description" id="description"
-                      rows="4" class="form-control"
-                      placeholder="Describe your skill, e.g., where you used it or how experienced you are..."
-                      required></textarea>
+            <quill-editor id="description" [(ngModel)]="skill.description" name="description"
+                          [styles]="{height: '250px'}" [required]="true"></quill-editor>
           </div>
   
           <div class="text-end">

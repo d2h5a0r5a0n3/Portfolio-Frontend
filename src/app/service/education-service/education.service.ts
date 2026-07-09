@@ -1,38 +1,51 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Education } from '../../educations/education';
-
+import { Firestore, collectionData, docData, addDoc, collection, deleteDoc, doc, updateDoc } from '@angular/fire/firestore';
 
 @Injectable({ providedIn: 'root' })
 export class EducationService {
-  private apiUrl = 'http://localhost:9091/api/educations';
-
-  constructor(private http: HttpClient) {}
+  private fireStore: Firestore = inject(Firestore);
+  private educationCollection = collection(this.fireStore, 'educations');
 
   getEducations(): Observable<Education[]> {
-    return this.http.get<Education[]>(this.apiUrl);
+    return (collectionData(this.educationCollection, { idField: 'id' }) as Observable<any[]>).pipe(
+      map(educations => educations.map(edu => ({
+        ...edu,
+        startDate: edu.startDate?.toDate ? edu.startDate.toDate() : edu.startDate,
+        endDate: edu.endDate?.toDate ? edu.endDate.toDate() : edu.endDate
+      })))
+    ) as Observable<Education[]>;
   }
 
-  getEducationById(id: number): Observable<Education> {
-    return this.http.get<Education>(`${this.apiUrl}/${id}`);
+  getEducationById(id: string): Observable<Education> {
+    const eduDoc = doc(this.fireStore, `educations/${id}`);
+    return (docData(eduDoc, { idField: 'id' }) as Observable<any>).pipe(
+      map(edu => edu ? {
+        ...edu,
+        startDate: edu.startDate?.toDate ? edu.startDate.toDate() : edu.startDate,
+        endDate: edu.endDate?.toDate ? edu.endDate.toDate() : edu.endDate
+      } : edu)
+    ) as Observable<Education>;
   }
 
-  addEducation(education: Education): Observable<Education> {
-    return this.http.post<Education>(this.apiUrl, education, {
-      withCredentials: true
-    });
+  async addEducation(education: Education): Promise<void> {
+    const dataToSave = { ...education };
+    Object.keys(dataToSave).forEach(key => (dataToSave as any)[key] === undefined && delete (dataToSave as any)[key]);
+    await addDoc(this.educationCollection, dataToSave);
   }
 
-  updateEducation(id: number, education: Education): Observable<Education> {
-    return this.http.put<Education>(`${this.apiUrl}/${id}`, education, {
-      withCredentials: true
-    });
+  async updateEducation(id: string, education: Education): Promise<void> {
+    const eduDoc = doc(this.fireStore, `educations/${id}`);
+    const dataToSave = { ...education };
+    delete dataToSave.id;
+    Object.keys(dataToSave).forEach(key => (dataToSave as any)[key] === undefined && delete (dataToSave as any)[key]);
+    await updateDoc(eduDoc, dataToSave);
   }
 
-  deleteEducation(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`, {
-      withCredentials: true
-    });
+  async deleteEducation(id: string): Promise<void> {
+    const eduDoc = doc(this.fireStore, `educations/${id}`);
+    await deleteDoc(eduDoc);
   }
 }

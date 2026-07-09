@@ -41,7 +41,7 @@ export class ProjectComponent implements OnInit {
     });
 
     this.projectService.getProjects().subscribe((data) => {
-      this.projects = data;
+      this.projects = data.sort((a, b) => (a.order || 0) - (b.order || 0));
     });
   }
 
@@ -49,10 +49,9 @@ export class ProjectComponent implements OnInit {
     this.router.navigate(['/new-project']);
   }
 
-  deleteProject(id: number): void {
-    this.projectService.deleteProject(id).subscribe(() => {
-      this.projects = this.projects.filter(p => p.id !== id);
-      this.snackBar.open('Project deleted successfully', 'Close', { duration: 3000 });
-    });
+  async deleteProject(id: string): Promise<void> {
+    await this.projectService.deleteProject(id);
+    this.projects = this.projects.filter(p => p.id !== id);
+    this.snackBar.open('Project deleted successfully', 'Close', { duration: 3000 });
   }
 }

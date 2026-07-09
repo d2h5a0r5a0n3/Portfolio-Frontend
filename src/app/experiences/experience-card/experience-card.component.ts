@@ -11,17 +11,18 @@ import { Router } from '@angular/router';
 import { isPlatformBrowser, CommonModule, NgIf } from '@angular/common';
 import { Experience } from '../../service/experience-service/experience.service';
 import { AuthService } from '../../service/auth-service/auth.service';
+import { SharedCardComponent } from '../../shared/shared-card/shared-card.component';
 
 @Component({
   selector: 'app-experience-card',
   standalone: true,
-  imports: [NgIf, CommonModule],
+  imports: [NgIf, CommonModule, SharedCardComponent],
   templateUrl: './experience-card.component.html',
   styleUrls: ['./experience-card.component.css']
 })
 export class ExperienceCardComponent implements OnInit {
   @Input() experience!: Experience;
-  @Output() deleteExperience = new EventEmitter<number>();
+  @Output() deleteExperience = new EventEmitter<string>();
   isAdmin: boolean = false;
 
   constructor(

@@ -1,0 +1,68 @@
+<div class="experience-container">
+  <div class="timeline-wrapper">
+    <div class="timeline-line"></div>
+  </div>
+  
+  <div class="experience-content">
+    <div class="experience-header d-flex justify-content-between align-items-center mb-4">
+      <h2 class="mb-0 text-gradient">Inbox</h2>
+    </div>
+
+    <ng-container *ngIf="messages$ | async as messages; else loading">
+      <div *ngIf="messages.length === 0" class="alert alert-info" style="background-color: rgba(255,255,255,0.05); color: var(--text-color); border: none;">
+        No messages found.
+      </div>
+
+      <div class="experience-entry" *ngFor="let message of messages">
+        <div class="timeline-dot" [matTooltip]="message.subject || 'No Subject'" matTooltipPosition="right" matTooltipClass="timeline-tooltip">
+          {{ message.timestamp | date:'MMM d' }}
+        </div>
+        
+        <!-- We use fullHeight=false so the card is small in length (height) depending on content -->
+        <app-shared-card [fullHeight]="false" [ngClass]="{ 'unread-panel': !message.read }">
+          <ng-container card-title>
+            <div class="d-flex align-items-center gap-2">
+              <span class="unread-dot" *ngIf="!message.read"></span>
+              <span [ngStyle]="{'color': !message.read ? 'var(--text-color)' : 'var(--secondary-text)'}" class="text-gradient">
+                {{ message.name }}
+              </span>
+            </div>
+          </ng-container>
+
+          <ng-container card-subtitle>
+             <strong>Email:</strong> <a [href]="'mailto:' + message.mail" class="text-decoration-none" style="color: var(--accent-color);">{{ message.mail }}</a>
+          </ng-container>
+
+          <ng-container card-date>
+             {{ message.timestamp | date:'medium' }}
+          </ng-container>
+          
+          <ng-container card-badges>
+             <span class="premium-badge">{{ message.subject || '(No Subject)' }}</span>
+          </ng-container>
+
+          <ng-container card-description>
+            <p class="whitespace-pre-wrap">{{ message.message }}</p>
+          </ng-container>
+
+          <ng-container card-actions>
+            <button class="btn btn-sm" (click)="toggleReadStatus($event, message)" [title]="message.read ? 'Mark as unread' : 'Mark as read'" style="color: #f59e0b;">
+              <i class="bi" [ngClass]="message.read ? 'bi-envelope-check' : 'bi-envelope-exclamation'"></i> {{ message.read ? 'Mark Unread' : 'Mark Read' }}
+            </button>
+            <button class="btn btn-sm" (click)="deleteMessage($event, message)" title="Delete message" style="color: #ef4444;">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </ng-container>
+        </app-shared-card>
+      </div>
+    </ng-container>
+
+    <ng-template #loading>
+      <div class="text-center py-5">
+        <div class="spinner-border" style="color: var(--accent-color);" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

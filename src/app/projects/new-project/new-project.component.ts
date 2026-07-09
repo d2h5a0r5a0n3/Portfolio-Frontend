@@ -3,11 +3,12 @@ import { ProjectService, Project } from '../../service/project-service/project.s
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-new-project',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, QuillEditorComponent],
   templateUrl: './new-project.component.html'
 })
 export class NewProjectComponent {
@@ -27,7 +28,7 @@ export class NewProjectComponent {
 
   constructor(private service: ProjectService, private router: Router) {}
 
-  submitForm(): void {
+  async submitForm(): Promise<void> {
     const start = new Date(this.startDateInput);
     let end: Date | undefined;
 
@@ -58,8 +59,7 @@ export class NewProjectComponent {
     this.project.startDate = start;
     this.project.endDate = this.currentlyWorking ? undefined : end;
 
-    this.service.addProject(this.project).subscribe(() => {
-      this.router.navigate(['/projects']);
-    });
+    await this.service.addProject(this.project);
+    this.router.navigate(['/projects']);
   }
 }

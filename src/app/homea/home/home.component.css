@@ -1,0 +1,85 @@
+.home-container {
+  background-color: var(--bg-color);
+  margin-top: -60px; /* offset navbar to center perfectly */
+}
+
+.hero-content {
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.btn-primary {
+  background: var(--accent-color);
+  border: none;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline-secondary {
+  color: var(--text-color);
+  border-color: var(--border-color);
+  background: transparent;
+}
+
+.btn-outline-secondary:hover {
+  background: var(--card-color);
+  color: var(--text-color);
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+/* Typing Effect */
+.typing-effect {
+  overflow: hidden;
+  border-right: 3px solid var(--accent-color);
+  white-space: nowrap;
+  margin: 0 auto;
+  animation: 
+    typing 2s steps(28, end),
+    blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: var(--accent-color) }
+}
+
+/* Social Links */
+.social-links {
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.social-icon {
+  font-size: 1.8rem;
+  color: var(--secondary-text);
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  color: var(--accent-color);
+  transform: translateY(-4px) scale(1.15);
+}

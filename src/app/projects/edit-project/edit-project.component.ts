@@ -3,11 +3,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProjectService, Project } from '../../service/project-service/project.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-edit-project',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, QuillEditorComponent],
   templateUrl: './edit-project.component.html'
 })
 export class EditProjectComponent implements OnInit {
@@ -21,7 +22,7 @@ export class EditProjectComponent implements OnInit {
     endDate: new Date()
   };
 
-  id!: number;
+  id!: string;
   startDateInput: string = '';
   endDateInput: string = '';
   currentlyWorking: boolean = false;
@@ -33,7 +34,7 @@ export class EditProjectComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = +this.route.snapshot.paramMap.get('id')!;
+    this.id = this.route.snapshot.paramMap.get('id')!;
     this.service.getProjectById(this.id).subscribe((data) => {
       this.project = data;
 
@@ -48,7 +49,7 @@ export class EditProjectComponent implements OnInit {
     });
   }
 
-  submitForm(): void {
+  async submitForm(): Promise<void> {
     const start = new Date(this.startDateInput);
     const end = this.currentlyWorking ? undefined : new Date(this.endDateInput);
     if (
@@ -62,8 +63,7 @@ export class EditProjectComponent implements OnInit {
     this.project.startDate = start;
     this.project.endDate = end;
 
-    this.service.updateProject(this.id, this.project).subscribe(() => {
-      this.router.navigate(['/projects']);
-    });
+    await this.service.updateProject(this.id, this.project);
+    this.router.navigate(['/projects']);
   }
 }

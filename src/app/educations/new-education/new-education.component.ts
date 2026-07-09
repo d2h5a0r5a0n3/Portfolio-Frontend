@@ -4,6 +4,7 @@ import { EducationService } from '../../service/education-service/education.serv
 import { Education } from '../education';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { QuillEditorComponent } from 'ngx-quill';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -11,7 +12,7 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   templateUrl: './new-education.component.html',
   styleUrls: ['./new-education.component.css'],
-  imports: [CommonModule, FormsModule, RouterLink]
+  imports: [CommonModule, FormsModule, RouterLink, QuillEditorComponent]
 })
 export class NewEducationComponent {
   education: Education = {
@@ -29,7 +30,7 @@ export class NewEducationComponent {
 
   constructor(private service: EducationService, private router: Router) {}
 
-  submitForm(): void {
+  async submitForm(): Promise<void> {
     const start = new Date(this.startDateInput);
     const end = this.currentlyStudying ? undefined : new Date(this.endDateInput);
 
@@ -53,8 +54,7 @@ export class NewEducationComponent {
     this.education.startDate = start;
     this.education.endDate = end;
 
-    this.service.addEducation(this.education).subscribe(() => {
-      this.router.navigate(['/educations']);
-    });
+    await this.service.addEducation(this.education);
+    this.router.navigate(['/educations']);
   }
 }

@@ -43,8 +43,8 @@
 
         <div class="mb-3">
           <label for="description" class="form-label">Description</label>
-          <textarea [(ngModel)]="project.description" name="description" id="description"
-            class="form-control" rows="3"></textarea>
+          <quill-editor [(ngModel)]="project.description" name="description" id="description"
+            [styles]="{height: '250px'}" [required]="true"></quill-editor>
         </div>
 
         <div class="mb-3">

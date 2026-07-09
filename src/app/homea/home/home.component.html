@@ -1,0 +1,49 @@
+<div class="home-container d-flex align-items-center justify-content-center min-vh-100" *ngIf="!isLoginRoute">
+  <div class="text-center hero-content p-4">
+    <h1 class="display-3 fw-bold mb-3 text-gradient">Hello, I'm Dharaneshwar</h1>
+    
+    <div class="d-flex justify-content-center mb-4">
+      <div style="width: max-content;">
+        <h2 class="h3 text-muted typing-effect mb-0">Full Stack Software Engineer</h2>
+      </div>
+    </div>
+    
+    <p class="lead mb-5 mx-auto" style="max-width: 700px; color: var(--secondary-text); line-height: 1.8;">
+      I'm a passionate software engineer specializing in building scalable enterprise applications. With deep expertise in <strong>Java, Spring Boot, Angular, and PostgreSQL</strong>, I love crafting clean, maintainable code and solving complex business problems through technology.
+    </p>
+    
+    <div class="d-flex gap-3 justify-content-center flex-wrap mb-2">
+      <a routerLink="/projects" class="btn btn-primary btn-lg px-4 py-2 rounded-pill shadow-sm">
+        View My Work
+      </a>
+      <a routerLink="/contact" class="btn btn-outline-secondary btn-lg px-4 py-2 rounded-pill">
+        Get In Touch
+      </a>
+    </div>
+
+    <!-- Social Links -->
+    <div class="d-flex gap-4 justify-content-center align-items-center mt-5 social-links">
+      <a href="https://github.com/d2h5a0r5a0n3" target="_blank" class="social-icon" title="GitHub">
+        <i class="bi bi-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/dharaneshwar-kalavena-64833026a" target="_blank" class="social-icon" title="LinkedIn">
+        <i class="bi bi-linkedin"></i>
+      </a>
+      <a href="https://leetcode.com/u/dharaneshwarkalavena/" target="_blank" class="social-icon" title="LeetCode">
+        <i class="bi bi-code-slash"></i>
+      </a>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dharaneshwarkalavena@gmail.com" target="_blank" class="social-icon" title="Email">
+        <i class="bi bi-envelope-fill"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Login Section (only visible on /login route) -->
+<div class="container mt-5 text-center" *ngIf="isLoginRoute && !isAdmin">
+    <h3>Admin Login</h3>
+    <p class="text-muted">Click the button below to securely sign in with Google.</p>
+    <button class="btn btn-outline-secondary btn-lg mt-3" (click)="login()" style="background-color: var(--card-color);">
+        <i class="devicon-google-plain colored me-2"></i> Login with Google
+    </button>
+</div>

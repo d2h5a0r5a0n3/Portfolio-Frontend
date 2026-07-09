@@ -10,13 +10,13 @@ import { NewExperienceComponent } from './experiences/new-experience/new-experie
 import { EditExperienceComponent } from './experiences/edit-experience/edit-experience.component';
 import { ViewExperienceComponent } from './experiences/view-experience/view-experience.component';
 import { ContactComponent } from './contact/contact/contact.component';
+import { MessagesComponent } from './contact/messages/messages.component';
 import { EducationComponent } from './educations/education/education.component';
 import { EditEducationComponent } from './educations/edit-education/edit-education.component';
 import { NewEducationComponent } from './educations/new-education/new-education.component';
 import { ViewEducationComponent } from './educations/view-education/view-education.component';
 import { ResumeDisplayComponent } from './resume/resume-display/resume-display.component';
-import { ResumeChooserComponent } from './resume/resume-chooser/resume-chooser.component';
-import { SkillCardComponent } from './skills/skill-card/skill-card.component';
+import { SkillComponent } from './skills/skill/skill.component';
 import { NewSkillComponent } from './skills/new-skill/new-skill.component';
 import { EditSkillComponent } from './skills/edit-skill/edit-skill.component';
 import { ViewSkillComponent } from './skills/view-skill/view-skill.component';
@@ -26,6 +26,7 @@ export const routes: Routes = [
     { path: 'login', component: HomeComponent },
     { path: 'logout', component: HomeComponent },
     { path: 'status', component: HomeComponent },
+    { path: 'data-dump', loadComponent: () => import('./seed-manager/seed-manager.component').then(m => m.SeedManagerComponent) },
     { path: 'projects', component: ProjectComponent },
     { path: 'new-project', component: NewProjectComponent, canActivate: [adminGuard] },
     { path: 'edit-project/:id', component: EditProjectComponent, canActivate: [adminGuard] },
@@ -35,13 +36,13 @@ export const routes: Routes = [
     { path: 'edit-experience/:id', component: EditExperienceComponent, canActivate: [adminGuard] },
     { path: 'view-experience/:id', component: ViewExperienceComponent },
     { path: 'contact', component: ContactComponent },
+    { path: 'messages', component: MessagesComponent, canActivate: [adminGuard] },
     { path: 'educations', component: EducationComponent },
     { path: 'new-education', component: NewEducationComponent, canActivate: [adminGuard] },
     { path: 'edit-education/:id', component: EditEducationComponent, canActivate: [adminGuard] },
     { path: 'view-education/:id', component: ViewEducationComponent },
     { path: 'resume', component: ResumeDisplayComponent },
-    { path: 'choose-resume', component: ResumeChooserComponent, canActivate: [adminGuard] },
-    { path: 'skills', component: SkillCardComponent },
+    { path: 'skills', component: SkillComponent },
     { path: 'new-skill', component: NewSkillComponent, canActivate: [adminGuard] },
     { path: 'edit-skill/:id', component: EditSkillComponent, canActivate: [adminGuard] },
     { path: 'view-skill/:id', component: ViewSkillComponent }

@@ -1,21 +1,25 @@
-<div class="view-container container py-5" *ngIf="education">
+<div class="container py-4" *ngIf="education">
   <div class="mb-4">
     <a routerLink="/educations" class="btn btn-outline-secondary btn-sm">
       <i class="bi bi-arrow-left me-1"></i> Back to Education
     </a>
   </div>
 
-  <h2 class="project-title mb-2">{{ education.degree }}</h2>
-  <div class="text-muted mb-1">{{ education.institution }} | {{ education.fieldOfStudy }}</div>
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title mb-2">{{ education.degree }}</h4>
+      <h6 class="text-muted mb-3">{{ education.institution }} | {{ education.fieldOfStudy }}</h6>
 
-  <div class="mb-3 text-secondary small">
-    <i class="bi bi-calendar-event me-1"></i>
-    {{ education.startDate | date: 'MMM yyyy' }} -
-    {{ education.endDate ? (education.endDate | date: 'MMM yyyy') : 'Present' }}
-  </div>
+      <div class="mb-4 text-secondary small">
+        <i class="bi bi-calendar-event me-1"></i>
+        {{ education.startDate | date: 'MMM yyyy' }} -
+        {{ education.endDate ? (education.endDate | date: 'MMM yyyy') : 'Present' }}
+      </div>
 
-  <div class="project-description p-4 shadow-sm bg-light rounded">
-    <h5 class="mb-3 text-muted">Education Description</h5>
-    <p class="mb-0">{{ education.description }}</p>
+      <div class="mb-3">
+        <h5 class="text-muted mb-3 border-bottom pb-2">Description</h5>
+        <div class="description-box" [innerHTML]="education.description"></div>
+      </div>
+    </div>
   </div>
 </div>

@@ -5,10 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { SkillService } from '../../service/skill-service/skill.service';
 import { Skill } from '../../dto/skill/skill';
 
+import { QuillEditorComponent } from 'ngx-quill';
+
 @Component({
   selector: 'app-edit-skill',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, QuillEditorComponent],
   templateUrl: './edit-skill.component.html'
 })
 export class EditSkillComponent implements OnInit {
@@ -22,7 +24,7 @@ export class EditSkillComponent implements OnInit {
 
   skillCategories: string[] = [];
   proficiencies: string[] = [];
-  id!: number;
+  id!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,7 +33,7 @@ export class EditSkillComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = +this.route.snapshot.paramMap.get('id')!;
+    this.id = this.route.snapshot.paramMap.get('id')!;
     
     this.service.getSkill(this.id).subscribe(data => {
       this.skill = data;
@@ -46,7 +48,7 @@ export class EditSkillComponent implements OnInit {
     });
   }
 
-  submitForm(): void {
+  async submitForm(): Promise<void> {
     if (
       !this.skill.name ||
       !this.skill.description ||
@@ -57,8 +59,7 @@ export class EditSkillComponent implements OnInit {
       return;
     }
 
-    this.service.saveSkill({ ...this.skill, id: this.id }).subscribe(() => {
-      this.router.navigate(['/skills']);
-    });
+    await this.service.saveSkill({ ...this.skill, id: this.id });
+    this.router.navigate(['/skills']);
   }
 }

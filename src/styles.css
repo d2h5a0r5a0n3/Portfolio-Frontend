@@ -1,31 +1,38 @@
+@import 'quill/dist/quill.snow.css';
 :root {
-  --bg-color: #ffffff;
-  --text-color: #212529;
-  --card-color: #ffffff;
-  --secondary-text: #6c757d;
-  --accent-color: #007bff;
-  --btn-bg: #f8f9fa;
-  --btn-text: #000;
-  --border-color: #dee2e6;
+  --bg-color: #f8fafc;
+  --text-color: #0f172a;
+  --card-color: rgba(255, 255, 255, 0.85);
+  --secondary-text: #64748b;
+  --accent-color: #8b5cf6;
+  --btn-bg: #ffffff;
+  --btn-text: #0f172a;
+  --border-color: rgba(148, 163, 184, 0.3);
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --gradient-text: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
   --form-bg: #ffffff;
-  --form-border: #ced4da;
-  --form-focus: #80bdff;
-  --form-placeholder: #6c757d;
+  --form-border: #cbd5e1;
+  --form-focus: #a78bfa;
+  --form-placeholder: #94a3b8;
 }
 
 .dark-theme {
-  --bg-color: #2b2b2b;
-  --text-color: #dcdcdc;
-  --card-color: #3c3f41;
-  --secondary-text: #a9b7c6;
-  --accent-color: #6897bb;
-  --btn-bg: #4e5254;
-  --btn-text: #ffffff;
-  --border-color: #4e5254;
-  --form-bg: #3c3f41;
-  --form-border: #555;
-  --form-focus: #1a73e8;
-  --form-placeholder: #a9b7c6;
+  --bg-color: #0a0a0a;
+  --text-color: #f8fafc;
+  --card-color: rgba(23, 23, 23, 0.7);
+  --secondary-text: #a3a3a3;
+  --accent-color: #a78bfa;
+  --btn-bg: #171717;
+  --btn-text: #f8fafc;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --gradient-text: linear-gradient(135deg, #a78bfa 0%, #e879f9 100%);
+  --form-bg: #171717;
+  --form-border: #404040;
+  --form-focus: #8b5cf6;
+  --form-placeholder: #737373;
 }
 
 html, body {
@@ -34,7 +41,8 @@ html, body {
   color: var(--text-color);
   margin: 0;
   padding: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  letter-spacing: -0.025em;
 }
 
 body {
@@ -52,18 +60,57 @@ body {
   background-color: var(--btn-bg);
   color: var(--btn-text);
   border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
 }
-a.btn:hover {
-  opacity: 0.9;
+.btn:hover, a.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--card-shadow);
+  opacity: 1;
 }
 
-/* Badge */
-.badge {
-  font-size: 0.85rem;
-  padding: 0.5em 0.75em;
-  background-color: var(--btn-bg);
-  color: var(--btn-text);
+/* Premium Card Overhaul */
+.premium-card {
+  background: var(--card-color);
   border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: relative;
+  will-change: transform;
+}
+
+.premium-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--accent-color);
+}
+
+/* Gradient text */
+.text-gradient {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* Custom Badges */
+.premium-badge {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--accent-color);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  font-weight: 500;
+  border-radius: 20px;
+  padding: 0.35em 0.85em;
+  font-size: 0.75rem;
+  transition: all 0.2s ease;
+}
+.premium-badge:hover {
+  background: rgba(59, 130, 246, 0.2);
+  transform: scale(1.05);
 }
 
 /* Container Styling */
@@ -88,6 +135,23 @@ a.btn:hover {
   border-left: 4px solid var(--accent-color);
 }
 
+.description-box ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.description-box ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.description-box li {
+  margin-bottom: 0.25rem;
+}
+.description-box p:last-child {
+  margin-bottom: 0;
+}
+
 /* Form Controls */
 input[type="text"],
 input[type="date"],
@@ -104,11 +168,19 @@ select {
   transition: all 0.3s ease;
 }
 
-/* Placeholder styling */
+/* You can add global styles to this file, and also import other style files */
 input::placeholder,
 textarea::placeholder {
   color: var(--form-placeholder);
   opacity: 0.7;
+}
+
+quill-editor {
+  display: block !important;
+  width: 100% !important;
+  background-color: var(--form-bg);
+  border-radius: 0.25rem;
+  color: var(--text-color);
 }
 
 /* Focus State */

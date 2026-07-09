@@ -40,8 +40,8 @@
   
           <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea [(ngModel)]="skill.description" name="description" id="description"
-                      class="form-control" rows="3" required></textarea>
+            <quill-editor id="description" [(ngModel)]="skill.description" name="description"
+                          [styles]="{height: '250px'}" [required]="true"></quill-editor>
           </div>
   
           <button type="submit" class="btn btn-primary btn-sm">

@@ -5,10 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { SkillService } from '../../service/skill-service/skill.service';
 import { Skill } from '../../dto/skill/skill';
 
+import { QuillEditorComponent } from 'ngx-quill';
+
 @Component({
   selector: 'app-new-skill',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, QuillEditorComponent],
   templateUrl: './new-skill.component.html'
 })
 export class NewSkillComponent implements OnInit {
@@ -37,7 +39,7 @@ export class NewSkillComponent implements OnInit {
     });
   }
 
-  submitForm(): void {
+  async submitForm(): Promise<void> {
     if (
       !this.skill.name ||
       !this.skill.skillCategory ||
@@ -48,8 +50,7 @@ export class NewSkillComponent implements OnInit {
       return;
     }
 
-    this.service.saveSkill(this.skill).subscribe(() => {
-      this.router.navigate(['/skills']);
-    });
+    await this.service.saveSkill(this.skill);
+    this.router.navigate(['/skills']);
   }
 }

@@ -11,17 +11,18 @@ import {
   import { isPlatformBrowser, NgIf, CommonModule } from '@angular/common';
   import { AuthService } from '../../service/auth-service/auth.service';
 import { Skill } from '../../dto/skill/skill';
+import { SharedCardComponent } from '../../shared/shared-card/shared-card.component';
   
   @Component({
     selector: 'app-skill-card',
     standalone: true,
-    imports: [CommonModule, NgIf],
+    imports: [CommonModule, NgIf, SharedCardComponent],
     templateUrl: './skill-card.component.html',
     styleUrls: ['./skill-card.component.css']
   })
   export class SkillCardComponent implements OnInit {
     @Input() skill!: Skill;
-    @Output() deleteSkill = new EventEmitter<number>();
+    @Output() deleteSkill = new EventEmitter<string>();
     isAdmin: boolean = false;
   
     constructor(

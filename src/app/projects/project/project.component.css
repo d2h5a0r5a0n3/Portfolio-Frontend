@@ -7,6 +7,8 @@
   min-height: 100vh;
 }
 
+
+
 .timeline-wrapper {
   width: 80px;
   position: relative;
@@ -25,16 +27,26 @@
 
 .timeline-dot {
   position: absolute;
-  left: 50%;
-  width: 16px;
-  height: 16px;
+  top: 32px;
+  left: calc(-2rem - 40px);
   background-color: var(--accent-color);
-  border-radius: 50%;
+  color: #fff;
+  border-radius: 12px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  font-weight: bold;
   transform: translate(-50%, -50%);
   z-index: 2;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  white-space: nowrap;
 }
 
+.timeline-dot.empty-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  padding: 0;
+}
 .timeline-dot:hover {
   transform: translate(-50%, -50%) scale(1.4);
   box-shadow: 0 0 10px var(--accent-color);
@@ -58,11 +70,7 @@
   position: relative;
 }
 
-app-project-card {
-  display: block;
-  height: 70vh;
-}
-
+/* Responsive */
 @media (max-width: 768px) {
   .project-container {
     flex-direction: column;
@@ -75,9 +83,5 @@ app-project-card {
   .project-content {
     width: 100%;
     margin-left: 0;
-  }
-
-  app-project-card {
-    height: auto;
   }
 }
