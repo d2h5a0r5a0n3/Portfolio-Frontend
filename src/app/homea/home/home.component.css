@@ -81,5 +81,32 @@
 
 .social-icon:hover {
   color: var(--accent-color);
-  transform: translateY(-4px) scale(1.15);
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    margin-top: 0;
+    padding-top: 2rem;
+  }
+  .hero-content h1.display-3 {
+    font-size: 2.5rem;
+  }
+  .hero-content .h3.typing-effect {
+    font-size: 1.25rem;
+    white-space: normal;
+    animation: none;
+    border-right: none;
+    text-align: center;
+  }
+  .typing-wrapper {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .typing-effect {
+    white-space: normal;
+    border-right: none;
+    animation: none;
+  }
 }

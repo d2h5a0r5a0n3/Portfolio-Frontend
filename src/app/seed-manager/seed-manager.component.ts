@@ -344,6 +344,25 @@ export class SeedManagerComponent {
 
       const projects = [
         {
+          title: 'Personal Developer Portfolio',
+          techStack: 'Angular, TypeScript, Bootstrap, HTML5, CSS3, Firebase (Firestore & Authentication)',
+          description: `
+            Designed and developed a responsive, dynamic personal portfolio web application to showcase professional experience, education, projects, and skills.
+            <br><br>
+            <ul>
+              <li>Built a modern, single-page application (SPA) using Angular with a standalone component architecture and reactive programming (RxJS).</li>
+              <li>Designed a sleek, responsive user interface using Bootstrap 5, custom CSS, and interactive elements including a light/dark theme toggle.</li>
+              <li>Integrated Firebase as a serverless backend to manage application data securely and efficiently in real-time.</li>
+              <li>Utilized Cloud Firestore to store and dynamically serve portfolio content, eliminating the need for hardcoded data.</li>
+              <li>Implemented secure Google Authentication via Firebase Auth for admin access and content management.</li>
+              <li>Developed a robust data-seeding mechanism to effortlessly manage and populate Firestore collections from the frontend.</li>
+            </ul>
+          `,
+          github: 'https://github.com/d2h5a0r5a0n3/Portfolio-UI',
+          startDate: new Date('2026-06-01'),
+          endDate: undefined
+        },
+        {
           title: 'Split Work - Intelligent Task Management Platform',
           techStack: 'Java, Spring Boot, Angular, TypeScript, PostgreSQL, REST API, JWT, Docker, Git',
           description: `
